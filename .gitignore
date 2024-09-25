@@ -1,0 +1,5 @@
+touch .gitignore
+# Ignore the dataset folder
+dataset/
+# Ignore the processed data folder
+processedDataset/

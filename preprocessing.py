@@ -81,7 +81,7 @@ def process_images_in_folder(folder_path, output_folder, patch_size=32, max_size
 
     for filename in files:
         # Make the file extension check case-insensitive
-        if filename.lower().endswith(".dng"):  # Case-insensitive check for .dng extension
+        if filename.lower().endswith(".png"):  # Case-insensitive check for .dng extension
             print(f"Processing file: {filename}")
             image_path = os.path.join(folder_path, filename)
             
@@ -106,8 +106,8 @@ def process_images_in_folder(folder_path, output_folder, patch_size=32, max_size
                 cv2.imwrite(patch_output_path, patch)
                 print(f"Saved patch: {patch_output_path}")
         else:
-            print(f"Skipping non-DNG file: {filename}")
+            print(f"Skipping non-png file: {filename}")
 
-folder_path = r'C:\Users\kodur\OneDrive\Desktop\RAW images dataset'  # Folder containing your dataset of DNG images
-output_folder = r'C:\Users\kodur\OneDrive\Desktop\RAW Image patches'  # Folder where processed patches will be saved
+folder_path = r'D:\My repos\Adv-perception-Assignment-1\Assignment-1-Adv-Perceptron-\Dataset\Canon1D'  # Folder containing your dataset of DNG images
+output_folder = r'D:\My repos\Adv-perception-Assignment-1\Assignment-1-Adv-Perceptron-\ProcessedDataset\Canon1D'  # Folder where processed patches will be saved
 process_images_in_folder(folder_path, output_folder)
