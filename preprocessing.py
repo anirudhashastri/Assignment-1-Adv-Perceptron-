@@ -122,8 +122,8 @@ def process_images_in_folder(folder_path, output_folder, patch_size=32, max_size
                 cv2.imwrite(patch_output_path, patch)
                 print(f"Saved patch: {patch_output_path}")
         else:
-            print(f"Skipping non-DNG file: {filename}")
+            print(f"Skipping unsupported file format: {filename}")
 
-folder_path = r'C:\Users\kodur\OneDrive\Desktop\RAW images dataset'  # Folder containing your dataset of DNG images
-output_folder = r'C:\Users\kodur\OneDrive\Desktop\RAW Image patches'  # Folder where processed patches will be saved
+folder_path = r'C:\\Users\\kodur\\OneDrive\\Desktop\\Test_images dataset AP\\PNG images'  # Folder containing your dataset of images
+output_folder = r'C:\\Users\\kodur\\OneDrive\\Desktop\\Test_images dataset AP\\PNG patches'  # Folder where processed patches will be saved
 process_images_in_folder(folder_path, output_folder)
