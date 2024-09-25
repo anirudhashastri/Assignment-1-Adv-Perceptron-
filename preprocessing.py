@@ -65,8 +65,22 @@ def load_dng_image(dng_path):
         print(f"Failed to load DNG image: {dng_path}. Error: {e}")
         return None
 
+def load_image(image_path):
+    """Loads an image based on its file extension."""
+    ext = os.path.splitext(image_path)[1].lower()
+    if ext == ".dng":
+        return load_dng_image(image_path)
+    else:
+        # Load other image formats (.jpg, .png, etc.) using OpenCV
+        image = cv2.imread(image_path)
+        if image is not None:
+            print(f"Successfully loaded image: {image_path}")
+        else:
+            print(f"Failed to load image: {image_path}")
+        return image
+
 def process_images_in_folder(folder_path, output_folder, patch_size=32, max_size=1200):
-    """Process all DNG images in a folder, resize them, and apply histogram stretching to patches."""
+    """Process all supported images in a folder, resize them, and apply histogram stretching to patches."""
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
@@ -75,18 +89,20 @@ def process_images_in_folder(folder_path, output_folder, patch_size=32, max_size
         print(f"Folder not found: {folder_path}")
         return
 
+    # Supported image extensions
+    supported_extensions = (".jpg", ".jpeg", ".png", ".dng")
+
     # Print files found in the folder for debugging
     files = os.listdir(folder_path)
     print(f"Files found in folder: {files}")
 
     for filename in files:
-        # Make the file extension check case-insensitive
-        if filename.lower().endswith(".dng"):  # Case-insensitive check for .dng extension
+        if filename.lower().endswith(supported_extensions):  # Case-insensitive check for supported extensions
             print(f"Processing file: {filename}")
             image_path = os.path.join(folder_path, filename)
             
-            # Step 1: Load DNG image
-            image = load_dng_image(image_path)
+            # Step 1: Load the image
+            image = load_image(image_path)
             if image is None:
                 continue  # Skip if image could not be loaded
 
@@ -106,8 +122,8 @@ def process_images_in_folder(folder_path, output_folder, patch_size=32, max_size
                 cv2.imwrite(patch_output_path, patch)
                 print(f"Saved patch: {patch_output_path}")
         else:
-            print(f"Skipping non-DNG file: {filename}")
+            print(f"Skipping unsupported file format: {filename}")
 
-folder_path = r'C:\Users\kodur\OneDrive\Desktop\RAW images dataset'  # Folder containing your dataset of DNG images
-output_folder = r'C:\Users\kodur\OneDrive\Desktop\RAW Image patches'  # Folder where processed patches will be saved
+folder_path = r'C:\\Users\\kodur\\OneDrive\\Desktop\\Test_images dataset AP\\PNG images'  # Folder containing your dataset of images
+output_folder = r'C:\\Users\\kodur\\OneDrive\\Desktop\\Test_images dataset AP\\PNG patches'  # Folder where processed patches will be saved
 process_images_in_folder(folder_path, output_folder)
