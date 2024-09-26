@@ -108,7 +108,7 @@ def train_model_kfold(dataset, criterion, num_epochs=10, n_splits=3):
                 outputs = outputs.view(-1, num_patches_per_image, 3)  # Reshape to (batch_size, num_patches, 3)
                 outputs = outputs.mean(dim=1)  # Average over the patches for each image
 
-                
+
                 loss = criterion(outputs, groundtruths)
                 loss.backward()
                 optimizer.step()
@@ -123,9 +123,19 @@ def train_model_kfold(dataset, criterion, num_epochs=10, n_splits=3):
             test_loss = 0.0
             with torch.no_grad():
                 for images, groundtruths in test_loader:
+                    if images.dim() == 5:
+                    # Flatten the num_patches dimension into the batch dimension
+                        images = images.view(-1, *images.shape[2:])  # Combine batch_size and num_patches into one dimension
+
                     images = images.permute(0, 3, 1, 2).float().to(device)
                     groundtruths = groundtruths.float().to(device)
                     outputs = model(images)
+
+                    # Reshape outputs back to (batch_size, num_patches, 3) and average the predictions across all patches
+                    num_patches_per_image = outputs.shape[0] // groundtruths.shape[0]  # Calculate how many patches per image
+                    outputs = outputs.view(-1, num_patches_per_image, 3)  # Reshape to (batch_size, num_patches, 3)
+                    outputs = outputs.mean(dim=1)  # Average over the patches for each image
+                    
                     loss = criterion(outputs, groundtruths)
                     test_loss += loss.item()
 
