@@ -89,7 +89,7 @@ def train_model_kfold(dataset, criterion, optimizer, num_epochs=10, n_splits=3):
                 if images.dim() == 5:
                     # Flatten the first two dimensions (batch and patches) into one
                     images = images.view(-1, *images.shape[2:])  # Combine first two dimensions
-                    print(f"Shape after flattening: {images.shape}")        
+                    #print(f"Shape after flattening: {images.shape}")        
                     
                 
                 images = images.permute(0, 3, 1, 2).float()  # Adjust shape for PyTorch (batch, C, H, W)

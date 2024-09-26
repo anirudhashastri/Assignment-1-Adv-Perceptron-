@@ -9,3 +9,6 @@ processedDataset/
 
 # Ignore the pickle files
 *.pickle
+
+# Ignore the model files
+*.pth

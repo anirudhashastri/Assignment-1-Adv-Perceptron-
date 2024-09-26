@@ -8,6 +8,30 @@ import scipy.io as sio
 from preprocessing import load_image, resize_image_to_multiple_of_32, get_image_patches, histogram_stretching
 from ColorConstancyDataset import ColorConstancyDataset
 
+
+class AngularLoss(torch.nn.Module):
+    def __init__(self):
+        super(AngularLoss, self).__init__()
+    
+    def forward(self, y_pred, y_true):
+        # Normalize the predicted and ground truth vectors
+        y_pred_norm = torch.nn.functional.normalize(y_pred, dim=1)
+        y_true_norm = torch.nn.functional.normalize(y_true, dim=1)
+        
+        # Compute the dot product between the normalized predictions and ground truth
+        dot_product = torch.sum(y_pred_norm * y_true_norm, dim=1)
+        dot_product = torch.clamp(dot_product, min=-1.0, max=1.0)  # Clamp to avoid numerical issues
+        
+        # Compute the angular error in radians and convert to degrees
+        angular_error = torch.acos(dot_product) * (180.0 / 3.141592653589793)
+        
+        # Return the mean angular error over the batch
+        return torch.mean(angular_error)
+
+
+
+
+
 # Step 1: Define the CNN Architecture
 class ColorConstancyCNN(nn.Module):
     def __init__(self):
@@ -45,10 +69,10 @@ class ColorConstancyCNN(nn.Module):
 
 # Step 2: Load the Dataset and Ground Truth
 def load_data():
-    canon_1d_path = r'D:\My repos\Adv-perception-Assignment-1\Assignment-1-Adv-Perceptron-\Dataset\Canon1D'
-    canon_5d_path = r'D:\My repos\Adv-perception-Assignment-1\Assignment-1-Adv-Perceptron-\Dataset\Canon5D'
-    output_folder = r'D:\My repos\Adv-perception-Assignment-1\Assignment-1-Adv-Perceptron-\ProcessedDataset'
-    groundtruth_path = r'D:\My repos\Adv-perception-Assignment-1\Assignment-1-Adv-Perceptron-\Dataset\real_illum_568.mat'
+    canon_1d_path = r'E:\Adv perception\Assignment-1-Adv-Perceptron-\Dataset\Canon1D'
+    canon_5d_path = r'E:\Adv perception\Assignment-1-Adv-Perceptron-\Dataset\Canon5D'
+    output_folder = r'E:\Adv perception\Assignment-1-Adv-Perceptron-\ProcessedDataset'
+    groundtruth_path = r'E:\Adv perception\Assignment-1-Adv-Perceptron-\Dataset\real_illum_568.mat'
 
     canon_1d_images = sorted([os.path.join(canon_1d_path, f) for f in os.listdir(canon_1d_path) if f.endswith('.png')])
     canon_5d_images = sorted([os.path.join(canon_5d_path, f) for f in os.listdir(canon_5d_path) if f.endswith('.png')])
@@ -90,7 +114,7 @@ def train_model_kfold(dataset, criterion, num_epochs=10, n_splits=3):
             running_loss = 0.0
 
             for images, groundtruths in train_loader:
-
+                print(f"Shape after flattening: {images.shape}")
                 if images.dim() == 5:
                     # Flatten the num_patches dimension into the batch dimension
                     images = images.view(-1, *images.shape[2:])  # Combine batch_size and num_patches into one dimension
@@ -144,7 +168,7 @@ def train_model_kfold(dataset, criterion, num_epochs=10, n_splits=3):
             print(f'Epoch [{epoch+1}/{num_epochs}], Fold {fold+1}, Test Loss: {epoch_test_loss:.4f}')
 
         # Save the model for each fold
-        model_save_path = f"color_constancy_cnn_fold_{fold+1}.pth"
+        model_save_path = f"color_constancy_angular_cnn_fold_{fold+1}.pth"
         torch.save(model.state_dict(), model_save_path)
         print(f"Model for fold {fold+1} saved to {model_save_path}")
         
@@ -158,7 +182,8 @@ def main():
     dataset = load_data()
 
     # Instantiate the model, define the loss function
-    criterion = nn.MSELoss()
+    #criterion = # Instantiate the custom Angular Loss function
+    criterion = AngularLoss()
 
     # Train the model using 3-fold cross-validation
     train_loss_history, test_loss_history = train_model_kfold(
