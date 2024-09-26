@@ -8,6 +8,24 @@ import os
 import cv2
 import scipy.io as sio
 
+# Black levels for Canon 5D and Canon 1D cameras
+BLACK_LEVELS = {
+    'Canon 5D': 129,
+    'Canon 1D': 0
+}
+
+def remove_black_level_offset(image, camera_type='Canon 5D'):
+    """
+    Subtract the black level offset from the image based on the camera type.
+    :param image: The input image (in raw format or loaded).
+    :param camera_type: The type of camera used to capture the image (default 'Canon 5D').
+    """
+    black_level = BLACK_LEVELS.get(camera_type, 0)  # Default to 0 if unknown camera type
+    image = image.astype(np.float32)
+    image -= black_level
+    image = np.clip(image, 0, 255)  # Ensure the values stay within the valid range
+    return image.astype(np.uint8)
+
 def resize_image_to_multiple_of_32(image, max_size=1200):
     """Resize the image so that both dimensions are multiples of 32, while keeping aspect ratio."""
     #print("I am in the resize function")
@@ -135,6 +153,16 @@ def load_image(image_path):
 #             image = load_image(image_path)
 #             if image is None:
 #                 continue  # Skip if image could not be loaded
+
+              # Step 2: Apply black level correction based on the camera type
+#             if folder_path_1D in image_path:
+#               camera_type = 'Canon 1D'
+#             elif folder_path_5D in image_path:
+#               camera_type = 'Canon 5D'
+#             else:
+#               camera_type = 'Unknown'
+
+#             image = remove_black_level_offset(image, camera_type=camera_type)  
 
 #             # Step 2: Resize the image to have dimensions that are multiples of 32
 #             resized_image = resize_image_to_multiple_of_32(image, max_size=max_size)
