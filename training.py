@@ -7,7 +7,7 @@ from sklearn.model_selection import KFold
 import scipy.io as sio
 from preprocessing import load_image, resize_image_to_multiple_of_32, get_image_patches, histogram_stretching
 from ColorConstancyDataset import ColorConstancyDataset
-from NetworkNew import train_model_kfold,AngularLoss
+from Network import train_model_kfold,AngularLoss
 
 
 
