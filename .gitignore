@@ -5,6 +5,9 @@ dataset/
 processedDataset-1/
 
 # Ignore the processed data folder
+MaskedDataset/
+
+# Ignore the processed data folder
 processedDataset/
 
 # Ignore the pickle files

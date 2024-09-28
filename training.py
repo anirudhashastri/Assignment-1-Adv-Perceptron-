@@ -13,13 +13,13 @@ from Network import train_model_kfold,AngularLoss
 
 # Load the Dataset and Ground Truth
 def load_data():
-    canon_1d_path = r'E:\Adv perception\Assignment-1-Adv-Perceptron-\Dataset\Canon1D'
-    canon_5d_path = r'E:\Adv perception\Assignment-1-Adv-Perceptron-\Dataset\Canon5D'
-    output_folder = r'E:\Adv perception\Assignment-1-Adv-Perceptron-\ProcessedDataset'
-    groundtruth_path = r'E:\Adv perception\Assignment-1-Adv-Perceptron-\Dataset\real_illum_568.mat'
+    canon_1d_path = r'MaskedDataset\Canon1D'
+    canon_5d_path = r'MaskedDataset\Canon5D'
+    output_folder = r'ProcessedDataset'
+    groundtruth_path = r'Dataset\real_illum_568.mat'
 
-    canon_1d_images = sorted([os.path.join(canon_1d_path, f) for f in os.listdir(canon_1d_path) if f.endswith('.png')])
-    canon_5d_images = sorted([os.path.join(canon_5d_path, f) for f in os.listdir(canon_5d_path) if f.endswith('.png')])
+    canon_1d_images = sorted([os.path.join(canon_1d_path, f) for f in os.listdir(canon_1d_path) if f.endswith('.tiff')])
+    canon_5d_images = sorted([os.path.join(canon_5d_path, f) for f in os.listdir(canon_5d_path) if f.endswith('.tiff')])
     image_paths = canon_1d_images + canon_5d_images
 
     # Load ground truth illuminants
@@ -28,7 +28,8 @@ def load_data():
 
     # Prepare the dataset
     dataset = ColorConstancyDataset(image_paths, groundtruth_illuminants, output_folder)
-
+    print("Length of dataset")
+    print(len(dataset))
     return dataset
 
 

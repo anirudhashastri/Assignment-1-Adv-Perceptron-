@@ -79,7 +79,7 @@ def train_model_kfold(dataset, criterion, num_epochs=10, n_splits=3):
         test_loader = DataLoader(test_subset, batch_size=8, shuffle=False)
 
         model = ColorConstancyCNN()
-        optimizer = optim.Adam(model.parameters(), lr=0.0001)
+        optimizer = optim.Adam(model.parameters(), lr=0.001)
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         model = model.to(device)
 

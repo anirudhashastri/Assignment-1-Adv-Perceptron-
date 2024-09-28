@@ -33,7 +33,7 @@ class ColorConstancyDataset(Dataset):
         #print("I am here")
         image_path = self.image_paths[idx]
 
-        supported_extensions = (".jpg", ".jpeg", ".png", ".dng")  # Case-insensitive check for supported extensions
+        supported_extensions = (".jpg", ".jpeg", ".png", ".dng","tiff")  # Case-insensitive check for supported extensions
         if image_path.lower().endswith(supported_extensions):
             #print("i passed the lower case check")
             # Step 1: Load the image
