@@ -1,3 +1,9 @@
+'''
+Anirudha Shastri, Elliot Khouri, Venkata Satya Naga Sai Karthik Koduru
+9/27/2024
+CS 7180 Advanced Perception
+'''
+
 import rawpy
 import cv2
 import numpy as np
