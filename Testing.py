@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from torchvision.transforms import ToPILImage, ToTensor
 from preprocessing import load_image, resize_image_to_multiple_of_32, get_image_patches, histogram_stretching
-from test import ColorConstancyCNN
+from Network import ColorConstancyCNN
 import random
 import scipy.io as sio
 
@@ -62,8 +62,8 @@ def apply_illuminant_correction(image, illuminant):
     illuminant = illuminant + epsilon  # Add epsilon to avoid division by zero
     
     # Normalize the image by the illuminant (divide by illuminant and then multiply by a reference white point)
-    corrected_image = image / illuminant
-    corrected_image = np.clip(corrected_image, 0, 255).astype(np.uint8)  # Ensure values are in [0, 255]
+    corrected_image = image / (illuminant)
+    corrected_image = np.clip(corrected_image, 0, 255).astype(np.uint16)  # Ensure values are in [0, 255]
     return corrected_image
 
 
@@ -103,12 +103,12 @@ def main():
     
     # Load the pre-trained model
     model = ColorConstancyCNN().to(device)
-    model.load_state_dict(torch.load("E:\Adv perception\Assignment-1-Adv-Perceptron-\color_constancy_angular_cnn_2_fold_3.pth",weights_only=True))
+    model.load_state_dict(torch.load("color_constancy_angular_cnn_2_fold_3.pth",weights_only=True))
     
     # Load all image paths and ground truth illuminants (replace with actual paths)
-    canon_1d_path = r'E:\Adv perception\Assignment-1-Adv-Perceptron-\Dataset\Canon1D'
-    canon_5d_path = r'E:\Adv perception\Assignment-1-Adv-Perceptron-\Dataset\Canon5D'
-    groundtruth_path = r'E:\Adv perception\Assignment-1-Adv-Perceptron-\Dataset\real_illum_568.mat'
+    canon_1d_path = r'Dataset\1D'
+    canon_5d_path = r'Dataset\5D'
+    groundtruth_path = r'Dataset\real_illum_568.mat'
     
     canon_1d_images = sorted([os.path.join(canon_1d_path, f) for f in os.listdir(canon_1d_path) if f.endswith('.tiff')])
     canon_5d_images = sorted([os.path.join(canon_5d_path, f) for f in os.listdir(canon_5d_path) if f.endswith('.tiff')])
@@ -123,9 +123,11 @@ def main():
     
     # Select a random image and its corresponding ground truth
     random_image, random_groundtruth = random.choice(image_gt_pairs)
+    random_image, random_groundtruth = image_gt_pairs[0]
     
     # Visualize the input vs output for the selected image
     visualize_input_vs_output(random_image, random_groundtruth, model, device)
+
 
 if __name__ == "__main__":
     main()
