@@ -63,7 +63,7 @@ def apply_illuminant_correction(image, illuminant):
     
     # Normalize the image by the illuminant (divide by illuminant and then multiply by a reference white point)
     corrected_image = image / (illuminant)
-    corrected_image = np.clip(corrected_image, 0, 255).astype(np.uint16)  # Ensure values are in [0, 255]
+    #corrected_image = np.clip(corrected_image, 0, 255).astype(np.uint16)  # Ensure values are in [0, 255]
     return corrected_image
 
 
