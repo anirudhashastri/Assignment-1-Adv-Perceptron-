@@ -8,6 +8,8 @@ from test import ColorConstancyCNN
 import random
 import scipy.io as sio
 
+#test
+
 def visualize_input_vs_output(image_path, groundtruth_illuminant, model, device):
     # Load the image and ground truth illuminant
     image = load_image(image_path)
