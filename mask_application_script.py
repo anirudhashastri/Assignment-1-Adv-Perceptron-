@@ -1,3 +1,10 @@
+'''
+Anirudha Shastri, Elliot Khouri, Venkata Satya Naga Sai Karthik Koduru
+9/27/2024
+CS 7180 Advanced Perception
+Travel Days Used: 1
+'''
+
 import cv2
 import numpy as np
 import os
