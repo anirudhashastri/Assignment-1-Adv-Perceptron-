@@ -15,3 +15,6 @@ processedDataset/
 
 # Ignore the model files
 *.pth
+
+# ignore the results files 
+*.pkl

@@ -20,8 +20,8 @@ from Network import train_model_kfold,AngularLoss
 
 # Load the Dataset and Ground Truth
 def load_data():
-    canon_1d_path = r'Dataset\MaskedDataset\Canon1D'
-    canon_5d_path = r'Dataset\MaskedDataset\Canon5D'
+    canon_1d_path = r'MaskedDataset\Canon1D'
+    canon_5d_path = r'MaskedDataset\Canon5D'
     output_folder = r'ProcessedDataset'
     groundtruth_path = r'Dataset\real_illum_568.mat'
 

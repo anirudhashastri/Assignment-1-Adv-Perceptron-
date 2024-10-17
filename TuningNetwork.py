@@ -13,8 +13,10 @@ class ColorConstancyCNN(nn.Module):
 
         # Define filters for the convolutional layer (only 1x1 and 3x3 filters allowed now)
         if filter_size == '1x1':
+            self.filter_size = '1x1'
             self.conv1 = nn.Conv2d(in_channels=3, out_channels=240, kernel_size=1, stride=1)
         elif filter_size == '3x3':
+            self.filter_size = '3x3'
             self.conv1 = nn.Conv2d(in_channels=3, out_channels=240, kernel_size=3, stride=1)
         else:
             raise ValueError("Unsupported filter size. Use '1x1' or '3x3'.")
@@ -28,7 +30,11 @@ class ColorConstancyCNN(nn.Module):
         # Fully connected layers after the convolutional layers
         # Now assuming the feature map size is 4x4 after pooling
         # 240 channels * 4 * 4 = 3,840 features
-        self.fc1 = nn.Linear(240 * 4 * 4, 40)  # Fully connected layer with 40 nodes
+        if filter_size == '3x3':
+            self.fc1 = nn.Linear(240 * 3 * 3, 40)
+        else:
+            self.fc1 = nn.Linear(240 * 4 * 4, 40)  # Fully connected layer with 40 nodes
+        
         self.fc2 = nn.Linear(40, 3)  # Output layer with 3 nodes (RGB illuminant prediction)
 
         # Activation function setup (used in fully connected layers)
@@ -51,9 +57,15 @@ class ColorConstancyCNN(nn.Module):
         # Apply max pooling
         x = self.pool(x)
 
-        # Flatten the feature map to feed into the fully connected layers
-        x = x.view(x.size(0), -1)  # Flatten the tensor into shape (batch_size, num_features)
 
+        # Flatten the feature map to feed into the fully connected layers
+        if self.filter_size == '1x1':
+            x = x.reshape(-1, 240 * 4 * 4)
+        else:
+            x = x.reshape(-1, 240 * 3 * 3)
+        
+
+        
         # Fully connected layer with specified activation function
         x = self.fc1(x)
 
