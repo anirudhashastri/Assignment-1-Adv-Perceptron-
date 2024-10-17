@@ -30,10 +30,11 @@ def train_pipeline():
     # Hyperparameters to search through
     learning_rates = [0.001, 0.01]
     batch_sizes = [9]
-    dropout_rates = [0,0.15, 0.3]
+    dropout_rates = [0,0.15,0.3]
     filter_sizes = ['1x1','3x3']  # Multi-scale convolution filter sizes
-    activations = ['Relu','PReLU', 'LeakyReLU']  # Activation functions
-    num_epochs = 2
+    #activations = ['ReLU','PReLU', 'LeakyReLU']  # Activation functions
+    activations = ['LeakyReLU']
+    num_epochs = 20
 
     # Load the dataset
     dataset = load_data()
