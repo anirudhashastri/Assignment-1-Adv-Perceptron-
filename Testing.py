@@ -113,9 +113,9 @@ def main():
     model.load_state_dict(torch.load("color_constancy_angular_cnn_2_fold_3.pth",weights_only=True))
     
     # Load all image paths and ground truth illuminants (replace with actual paths)
-    canon_1d_path = r'C:\\Users\\kodur\\OneDrive\\Desktop\\Dataset_final\\1D'
-    canon_5d_path = r'C:\\Users\\kodur\\OneDrive\\Desktop\\Dataset_final\\5D - part 1'
-    groundtruth_path = r'C:\\Users\\kodur\\OneDrive\\Desktop\\Advanced Perception\\Bianco dataset\\real_illum_568.mat'
+    canon_1d_path = r'Dataset\1D'
+    canon_5d_path = r'Dataset\5D'
+    groundtruth_path = r'Dataset\real_illum_568.mat'
     
     canon_1d_images = sorted([os.path.join(canon_1d_path, f) for f in os.listdir(canon_1d_path) if f.endswith('.tiff')])
     canon_5d_images = sorted([os.path.join(canon_5d_path, f) for f in os.listdir(canon_5d_path) if f.endswith('.tiff')])
