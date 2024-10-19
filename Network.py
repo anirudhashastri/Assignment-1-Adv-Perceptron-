@@ -1,7 +1,7 @@
 '''
 Anirudha Shastri, Elliot Khouri, Venkata Satya Naga Sai Karthik Koduru
-Assignment 1
-9/27/2024
+Assignment 2
+10/19/2024
 CS 7180 Advanced Perception
 Travel Days Used: 1
 '''
