@@ -1,6 +1,8 @@
 # Advanced Perception Project - Color Constancy with CNN & GAN
 
-**Team Members**
+---
+
+## Team Members
 
 **Name:** Anirudha Shastri  
 **Teammates' names:** Elliot Khouri, Venkata Satya Naga Sai Karthik Koduru  
@@ -14,6 +16,8 @@
 - **IDE:** Visual Studio Code
 
 ---
+
+## Project Description
 
 A basic CNN color constancy architecture was implemented in Assignment 1. In Assignment 2, the architecture was further refined through hyperparameter tuning and experimental testing. The network was trained and tested on the color constancy dataset using 17 different parameter combinations (activation functions, dropout rates, filter sizes, etc.). Additionally, a standalone GAN was trained and tested on the dataset for comparison, and finally, a hybrid approach was used where the CNN output was passed through the GAN for further refinement.
 
