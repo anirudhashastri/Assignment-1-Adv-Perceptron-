@@ -10,7 +10,9 @@ IDE: Visual Studio code
 
 Instructions to run the files:
 
-The project consists of five files:
+A basic CNN color constancy architecture was implemented in assignment 1, in assignment 2 the architecture was further refined through hyperparameter tuning and experimental testing. The network is trained and run on the color constancy dataset with 17 different sets of parameters (activation functions, dropout rates, filter sizes etc.), additionally a standalone GAN is trained and run on the dataset for comparison, and finally a hybrid approach is used where the CNN output is run through the GAN for further refinement.  
+
+The project consists of eight files:
 
 1.mask_application_script.py: The first step is to apply masks over the Macbeth ColorChecker present in all the images. To run this file , you need to specify the paths to the image dataset, the folder containing the masks, and the output folder where the masked images will be saved. Running this script will prepare your dataset by applying the necessary masks.
 
@@ -25,6 +27,9 @@ This file defines the dataset class and the preprocessing steps needed for the C
 
 6.Testing.py: This script is used for testing the trained model. You will need to specify the path to the saved `.pth` file (the trained model), the test image dataset, and the ground truth illuminant `.mat` file. This script will load the trained model, apply it to the test dataset, and compare the predicted illuminants to the ground truth to evaluate the model's performance.
 
+7. TuningNetwork.py: This file contains the modified CNN architecture used for hyperparameter tuning. It defines the structure of the network, which includes options for different filter sizes (1x1 and 3x3), activation functions (ReLU, PReLU, LeakyReLU), and dropout rates. This flexibility allows us to systematically explore which configurations yield the best results for the color constancy task. This file is essential for parameter tuning as it forms the foundation for the network variations.
+
+8. ModelTuning.py: This script is responsible for performing hyperparameter tuning on the CNN architecture. It uses combinations of hyperparameters such as learning rate, filter sizes, activation functions, dropout rates, and batch size, and trains models using K-Fold Cross-Validation. The script saves the results of each run (training/testing loss, training time, model parameters) into .pkl files for further analysis. Additionally, the trained models are saved for later use and comparison.
 
 Required Libraries:
 
@@ -64,6 +69,8 @@ ASSIGNMENT-1-ADV-PERCEPTRON
 ├── Readme.txt
 ├── Testing.py
 ├── training.py
+├── TuningNetwork.py
+├── ModelTuning.py
 
 
 
