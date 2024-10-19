@@ -18,3 +18,10 @@ processedDataset/
 
 # ignore the results files 
 *.pkl
+
+#ignore the GAn files for now
+GAN/
+GAN2/
+
+# Ignore the CNN results file
+CNNResults/
