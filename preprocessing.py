@@ -71,6 +71,14 @@ def histogram_stretching(image_patch):
             
     return image_patch.astype(np.uint8)
 
+def convert_to_lab(image):
+    """Convert an RGB image to the Lab color space."""
+    return cv2.cvtColor(image, cv2.COLOR_RGB2Lab)
+
+def convert_to_ycbcr(image):
+    """Convert an RGB image to the YCbCr color space."""
+    return cv2.cvtColor(image, cv2.COLOR_RGB2YCrCb)
+
 def get_image_patches(image, patch_size=32):
     """Split the image into non-overlapping 32x32 patches."""
     #print("I am in the patch function")
@@ -86,6 +94,17 @@ def get_image_patches(image, patch_size=32):
                 patches.append(patch)
     #print(f"Extracted {len(patches)} patches from the image.")
     return np.array(patches)
+
+def get_multi_scale_patches(image, patch_sizes=[16, 32, 64]):
+    patches = []
+    for patch_size in patch_sizes:
+        for i in range(0, image.shape[0], patch_size):
+            for j in range(0, image.shape[1], patch_size):
+                patch = image[i:i + patch_size, j:j + patch_size]
+                if patch.shape[:2] == (patch_size, patch_size):
+                    patches.append(patch)
+    return np.array(patches)
+
 
 def load_dng_image(dng_path):
     """Loads a DNG image and converts it to an RGB image."""
