@@ -8,9 +8,9 @@ System Info:
 Operating System: Windows 11 
 IDE: Visual Studio code
 
-Instructions to run the files:
-
 A basic CNN color constancy architecture was implemented in assignment 1, in assignment 2 the architecture was further refined through hyperparameter tuning and experimental testing. The network is trained and run on the color constancy dataset with 17 different sets of parameters (activation functions, dropout rates, filter sizes etc.), additionally a standalone GAN is trained and run on the dataset for comparison, and finally a hybrid approach is used where the CNN output is run through the GAN for further refinement.  
+
+Instructions to run the files:
 
 The project consists of eight files:
 
