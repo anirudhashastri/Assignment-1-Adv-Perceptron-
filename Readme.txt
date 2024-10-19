@@ -1,49 +1,92 @@
-Name: Anirudha Shastri
-Teammates' names: Elliot Khouri, Venkata Satya Naga Sai Karthik Koduru
-Time Travel Days Used:1
+# Advanced Perception Project - Color Constancy with CNN & GAN
 
-=======
+**Team Members**  
+- **Anirudha Shastri**  
+- **Elliot Khouri**  
+- **Venkata Satya Naga Sai Karthik Koduru**  
+- **Time Travel Days Used**: 1
 
-System Info:
-Operating System: Windows 11 
-IDE: Visual Studio code
+---
 
-A basic CNN color constancy architecture was implemented in assignment 1, in assignment 2 the architecture was further refined through hyperparameter tuning and experimental testing. The network is trained and run on the color constancy dataset with 17 different sets of parameters (activation functions, dropout rates, filter sizes etc.), additionally a standalone GAN is trained and run on the dataset for comparison, and finally a hybrid approach is used where the CNN output is run through the GAN for further refinement.  
+## System Information
+- **Operating System**: Windows 11  
+- **IDE**: Visual Studio Code  
 
-Instructions to run the files:
+---
 
-The project consists of eight files:
+## Project Overview
 
-1.mask_application_script.py: The first step is to apply masks over the Macbeth ColorChecker present in all the images. To run this file , you need to specify the paths to the image dataset, the folder containing the masks, and the output folder where the masked images will be saved. Running this script will prepare your dataset by applying the necessary masks.
+A basic CNN color constancy architecture was implemented in Assignment 1, and in Assignment 2, the architecture was further refined through hyperparameter tuning and experimental testing. The network was trained and tested on the color constancy dataset using 17 different sets of parameter combinations (activation functions, dropout rates, filter sizes, etc.). Additionally, a standalone GAN was trained on the dataset for comparison, and finally, a hybrid approach was used where the CNN output was run through the GAN for further refinement.
 
-2.preprocessing.py: After applying the masks, the next step is to divide the images into 32x32 patches. To do this, specify the path to the dataset (the masked images) in the `preprocessing.py` file, and run the script. This script processes the images and prepares them for training by dividing them into patches suitable for input into the neural network.
+---
 
-3.ColorConstancyDataset.py:
-This file defines the dataset class and the preprocessing steps needed for the CNN pipeline. It loads the images, applies transformations, and organizes them into batches for training and testing. The preprocessing steps include normalizing the images, resizing, and creating data loaders, which are then used by the training and testing scripts. Make sure the paths to the dataset and the required ground truth files are set before using this script. It's essential to call this dataset file before running the CNN pipeline, as it prepares the data for the network.
+## Instructions to Run the Files
 
-4.Network.py: This file contains the Convolutional Neural Network (CNN) architecture. It defines the structure of the network that will be used to perform the color constancy task. The network’s architecture, layers, and forward pass logic are written here.
+### CNN Files
 
-5.training.py: This file is responsible for training the CNN. You need to specify the path to the dataset (the preprocessed 32x32 patches) and also the path to the ground truth illuminant `.mat` file, which contains the correct illuminants for each image. Our teammate, Anirudha, was responsible for training the network, and after completing the training, he shared the trained model’s `.pth` file.
+1. **`mask_application_script.py`**  
+   - 📸 *Description*: Applies masks over the Macbeth ColorChecker present in all images.  
+   - 🔧 *How to Run*: Specify the paths to the image dataset, the folder containing the masks, and the output folder where masked images will be saved.
 
-6.Testing.py: This script is used for testing the trained model. You will need to specify the path to the saved `.pth` file (the trained model), the test image dataset, and the ground truth illuminant `.mat` file. This script will load the trained model, apply it to the test dataset, and compare the predicted illuminants to the ground truth to evaluate the model's performance.
+2. **`preprocessing.py`**  
+   - 🖼️ *Description*: Divides masked images into 32x32 patches.  
+   - 🔧 *How to Run*: Specify the path to the dataset in the script and execute to process images for training.
 
-7. TuningNetwork.py: This file contains the modified CNN architecture used for hyperparameter tuning. It defines the structure of the network, which includes options for different filter sizes (1x1 and 3x3), activation functions (ReLU, PReLU, LeakyReLU), and dropout rates. This flexibility allows us to systematically explore which configurations yield the best results for the color constancy task. This file is essential for parameter tuning as it forms the foundation for the network variations.
+3. **`ColorConstancyDataset.py`**  
+   - 🗂️ *Description*: Defines the dataset class and preprocessing steps for the CNN. It handles image transformations, resizing, and data loader creation.  
+   - 🔧 *How to Run*: Make sure the dataset paths and ground truth files are correctly set before running the script.
 
-8. ModelTuning.py: This script is responsible for performing hyperparameter tuning on the CNN architecture. It uses combinations of hyperparameters such as learning rate, filter sizes, activation functions, dropout rates, and batch size, and trains models using K-Fold Cross-Validation. The script saves the results of each run (training/testing loss, training time, model parameters) into .pkl files for further analysis. Additionally, the trained models are saved for later use and comparison.
+4. **`Network.py`**  
+   - 🤖 *Description*: Defines the CNN architecture used for the color constancy task. Includes the model’s layers, forward pass logic, and activation functions.
 
-Required Libraries:
+5. **`training.py`**  
+   - 🎓 *Description*: Responsible for training the CNN using the preprocessed patches and ground truth illuminant `.mat` files.  
+   - 🔧 *How to Run*: Set the paths for both dataset and illuminant files, then run the script.
 
-PyTorch
-NumPy
-OpenCV
-SciPy
-Tqdm 
-Matplotlib 
+6. **`Testing.py`**  
+   - 🔍 *Description*: Tests the trained model on a test dataset and evaluates performance against ground truth.  
+   - 🔧 *How to Run*: Provide the path to the trained model and test dataset to perform testing.
 
+7. **`TuningNetwork.py`**  
+   - ⚙️ *Description*: Defines a modified CNN architecture to allow for hyperparameter tuning. Supports different filter sizes (`1x1`, `3x3`), activation functions (`ReLU`, `PReLU`, `LeakyReLU`), and dropout rates.
 
-File Structure 
+8. **`ModelTuning.py`**  
+   - 📊 *Description*: Performs hyperparameter tuning using combinations of hyperparameters and K-Fold Cross-Validation. Saves results for further analysis.
 
-ASSIGNMENT-1-ADV-PERCEPTRON
+### GAN Files
+
+1. **`dataloader.py`**  
+   - 🗃️ *Description*: Loads `.tiff` images and illuminant values for GAN training. Converts images to tensors after resizing to 256x256.
+
+2. **`network.py`**  
+   - 🔄 *Description*: Defines both the generator and discriminator of the GAN. The generator uses ResNet blocks to create color-corrected images, and the discriminator learns to classify real vs. generated images.
+
+3. **`preprocessing.py`**  
+   - ⚗️ *Description*: Provides preprocessing functions including resizing images, extracting 32x32 patches, and applying histogram stretching for contrast normalization.
+
+4. **`test.py`**  
+   - 🧪 *Description*: Tests the trained GAN model on an input image and saves the generated white-balanced image. Also, displays input vs. output images side by side.
+
+5. **`train.py`**  
+   - 📈 *Description*: Responsible for training the GAN. Loads images and illuminant data, and iteratively trains both generator and discriminator using Mean Squared Error (MSE) loss.
+
+---
+
+## Required Libraries
+
+- **PyTorch**
+- **NumPy**
+- **OpenCV**
+- **SciPy**
+- **Tqdm**
+- **Matplotlib**
+
+---
+
+## File Structure
+
+```plaintext
+ASSIGNMENT-1-ADV-PERCEPTRON/
 ├── __pycache__/
 ├── Dataset/
 │   ├── 1D/
@@ -66,14 +109,14 @@ ASSIGNMENT-1-ADV-PERCEPTRON
 ├── mask_application_script.py
 ├── Network.py
 ├── preprocessing.py
-├── Readme.txt
+├── Readme.md
 ├── Testing.py
 ├── training.py
 ├── TuningNetwork.py
 ├── ModelTuning.py
-
-
-
-
-
-
+├── GAN/
+│   ├── dataloader.py
+│   ├── Network.py
+│   ├── preprocessing.py
+│   ├── test.py
+│   ├── train.py
