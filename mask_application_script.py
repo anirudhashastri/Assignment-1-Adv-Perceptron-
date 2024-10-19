@@ -11,14 +11,13 @@ import os
 import re
 
 # Path to the folder containing images and masks
+#image_folder = "E:/Adv perception/Assignment-1-Adv-Perceptron-/Dataset/1D"
+#mask_folder = "E:/Adv perception/Assignment-1-Adv-Perceptron-/Dataset/1D-Masks"
+#output_folder = "E:/Adv perception/Assignment-1-Adv-Perceptron-/MaskedDataset/Canon1D"
 
-#image_folder = "Dataset/5D"
-#mask_folder = "Dataset/5D/5D-masks"
-#output_folder = "Dataset/MaskedDataset/Canon5D"
-
-image_folder = "CNNResults/5D"
-mask_folder = "Dataset/5D-Masks"
-output_folder = "CNNResults/CNNMasked/Canon5D"
+image_folder = "Dataset/5D"
+mask_folder = "Dataset/5D/5D-masks"
+output_folder = "Dataset/MaskedDataset/Canon5D"
 
 # Function to apply masks to a color image
 
