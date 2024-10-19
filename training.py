@@ -53,7 +53,7 @@ def main():
     train_loss_history, test_loss_history = train_model_kfold(
         dataset,
         criterion,
-        num_epochs=5,
+        num_epochs=20,
         n_splits=3
     )
 

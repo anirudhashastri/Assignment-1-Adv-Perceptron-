@@ -146,7 +146,7 @@ def train_model_kfold(dataset, criterion, num_epochs=10, n_splits=3):
             print(f'Epoch [{epoch+1}/{num_epochs}], Fold {fold+1}, Test Loss: {epoch_test_loss:.4f}')
 
         # Save the model for each fold
-        model_save_path = f"color_constancy_angular_cnn_3_5_epoch_test_fold_{fold+1}.pth"
+        model_save_path = f"color_constancy_angular_cnn_for_GAN_traning_20_epoch_test_fold_{fold+1}.pth"
         torch.save(model.state_dict(), model_save_path)
         print(f"Model for fold {fold+1} saved to {model_save_path}")
 
