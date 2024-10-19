@@ -2,97 +2,110 @@
 
 **Team Members**
 
-- **Anirudha Shastri**
-- **Elliot Khouri**
-- **Venkata Satya Naga Sai Karthik Koduru**
-- **Time Travel Days Used**: 1
+**Name:** Anirudha Shastri  
+**Teammates' names:** Elliot Khouri, Venkata Satya Naga Sai Karthik Koduru  
+**Time Travel Days Used:** 1
 
 ---
 
-## System Information
+## System Info
 
-- **Operating System**: Windows 11
-- **IDE**: Visual Studio Code
+- **Operating System:** Windows 11
+- **IDE:** Visual Studio Code
 
 ---
 
-## Project Overview
-
-A basic CNN color constancy architecture was implemented in Assignment 1, and in Assignment 2, the architecture was further refined through hyperparameter tuning and experimental testing. The network was trained and tested on the color constancy dataset using 17 different sets of parameter combinations (activation functions, dropout rates, filter sizes, etc.). Additionally, a standalone GAN was trained on the dataset for comparison, and finally, a hybrid approach was used where the CNN output was run through the GAN for further refinement.
+A basic CNN color constancy architecture was implemented in Assignment 1. In Assignment 2, the architecture was further refined through hyperparameter tuning and experimental testing. The network was trained and tested on the color constancy dataset using 17 different parameter combinations (activation functions, dropout rates, filter sizes, etc.). Additionally, a standalone GAN was trained and tested on the dataset for comparison, and finally, a hybrid approach was used where the CNN output was passed through the GAN for further refinement.
 
 ---
 
 ## Instructions to Run the Files
 
-### CNN Files
+### CNN:
 
-1. **`mask_application_script.py`**
+1. **mask_application_script.py**  
+   The first step is to apply masks over the Macbeth ColorChecker present in all images.
 
-   - 📸 _Description_: Applies masks over the Macbeth ColorChecker present in all images.
-   - 🔧 _How to Run_: Specify the paths to the image dataset, the folder containing the masks, and the output folder where masked images will be saved.
+   - To run this file, specify the paths to the image dataset, the folder containing the masks, and the output folder where the masked images will be saved.
+   - Running this script will prepare your dataset by applying the necessary masks.
 
-2. **`preprocessing.py`**
+2. **preprocessing.py**  
+   After applying the masks, divide the images into 32x32 patches.
 
-   - 🖼️ _Description_: Divides masked images into 32x32 patches.
-   - 🔧 _How to Run_: Specify the path to the dataset in the script and execute to process images for training.
+   - Specify the path to the dataset (masked images) in the `preprocessing.py` file, and run the script.
+   - This processes the images, preparing them for training by dividing them into patches suitable for input into the neural network.
 
-3. **`ColorConstancyDataset.py`**
+3. **ColorConstancyDataset.py**  
+   Defines the dataset class and preprocessing steps for the CNN pipeline.
 
-   - 🗂️ _Description_: Defines the dataset class and preprocessing steps for the CNN. It handles image transformations, resizing, and data loader creation.
-   - 🔧 _How to Run_: Make sure the dataset paths and ground truth files are correctly set before running the script.
+   - It loads the images, applies transformations, and organizes them into batches for training and testing.
+   - Preprocessing includes normalizing images, resizing, and creating data loaders. Ensure paths to the dataset and required ground truth files are set before using this script.
 
-4. **`Network.py`**
+4. **Network.py**  
+   Defines the CNN architecture.
 
-   - 🤖 _Description_: Defines the CNN architecture used for the color constancy task. Includes the model’s layers, forward pass logic, and activation functions.
+   - It contains the structure of the network used to perform the color constancy task, including the network layers and forward pass logic.
 
-5. **`training.py`**
+5. **training.py**  
+   Responsible for training the CNN.
 
-   - 🎓 _Description_: Responsible for training the CNN using the preprocessed patches and ground truth illuminant `.mat` files.
-   - 🔧 _How to Run_: Set the paths for both dataset and illuminant files, then run the script.
+   - Specify the path to the dataset (preprocessed 32x32 patches) and the ground truth illuminant `.mat` file.
+   - Anirudha trained the network and shared the trained model’s `.pth` file after completion.
 
-6. **`Testing.py`**
+6. **Testing.py**  
+   Used for testing the trained model.
 
-   - 🔍 _Description_: Tests the trained model on a test dataset and evaluates performance against ground truth.
-   - 🔧 _How to Run_: Provide the path to the trained model and test dataset to perform testing.
+   - Specify the path to the saved `.pth` file (trained model), the test image dataset, and the ground truth illuminant `.mat` file.
+   - The script will load the trained model, apply it to the test dataset, and compare the predicted illuminants to the ground truth.
 
-7. **`TuningNetwork.py`**
+7. **TuningNetwork.py**  
+   Contains the modified CNN architecture for hyperparameter tuning.
 
-   - ⚙️ _Description_: Defines a modified CNN architecture to allow for hyperparameter tuning. Supports different filter sizes (`1x1`, `3x3`), activation functions (`ReLU`, `PReLU`, `LeakyReLU`), and dropout rates.
+   - Defines the structure of the network, including options for different filter sizes (1x1 and 3x3), activation functions (ReLU, PReLU, LeakyReLU), and dropout rates.
 
-8. **`ModelTuning.py`**
-   - 📊 _Description_: Performs hyperparameter tuning using combinations of hyperparameters and K-Fold Cross-Validation. Saves results for further analysis.
+8. **ModelTuning.py**  
+   Responsible for hyperparameter tuning on the CNN architecture.
+   - Uses combinations of hyperparameters (learning rate, filter sizes, activation functions, dropout rates, batch size) and trains models using K-Fold Cross-Validation.
+   - Saves results and trained models for later use and comparison.
 
-### GAN Files
+### GAN:
 
-1. **`dataloader.py`**
+1. **dataloader.py**  
+   Handles data loading for the GAN.
 
-   - 🗃️ _Description_: Loads `.tiff` images and illuminant values for GAN training. Converts images to tensors after resizing to 256x256.
+   - Functions to load `.tiff` or `.tif` images from a specified folder and illuminant values from an Excel file.
+   - Resizes images to 256x256 pixels and converts them to tensors.
 
-2. **`network.py`**
+2. **network.py**  
+   Defines the GAN architecture (generator and discriminator models).
 
-   - 🔄 _Description_: Defines both the generator and discriminator of the GAN. The generator uses ResNet blocks to create color-corrected images, and the discriminator learns to classify real vs. generated images.
+   - The generator uses ResNet blocks to generate color-corrected images, while the discriminator distinguishes between real and fake images.
 
-3. **`preprocessing.py`**
+3. **preprocessing.py**  
+   Contains preprocessing functions for the GAN.
 
-   - ⚗️ _Description_: Provides preprocessing functions including resizing images, extracting 32x32 patches, and applying histogram stretching for contrast normalization.
+   - This includes resizing images to multiples of 32, extracting 32x32 patches, and applying histogram stretching for contrast normalization.
 
-4. **`test.py`**
+4. **test.py**  
+   Used to test the trained GAN model.
 
-   - 🧪 _Description_: Tests the trained GAN model on an input image and saves the generated white-balanced image. Also, displays input vs. output images side by side.
+   - Takes an input image, applies the generator, and produces a white-balanced output.
+   - Displays the input and generated images side-by-side for easy comparison.
 
-5. **`train.py`**
-   - 📈 _Description_: Responsible for training the GAN. Loads images and illuminant data, and iteratively trains both generator and discriminator using Mean Squared Error (MSE) loss.
+5. **train.py**  
+   Responsible for training the GAN model.
+   - Uses images and illuminant data to iteratively train both the generator and discriminator models, and optimizes using Mean Squared Error (MSE) loss.
 
 ---
 
-## Required Libraries
+## Required Libraries:
 
-- **PyTorch**
-- **NumPy**
-- **OpenCV**
-- **SciPy**
-- **Tqdm**
-- **Matplotlib**
+- PyTorch
+- NumPy
+- OpenCV
+- SciPy
+- Tqdm
+- Matplotlib
 
 ---
 
